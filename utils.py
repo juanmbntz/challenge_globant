@@ -7,8 +7,13 @@ def csv_to_bq(data_source, table_schema, project_id='fake-project-id', dataset_n
     the file is located and runs a job to create a bigquery table in the specified dataset with the data contained inside the file
 
     Assumptions:
-        - Files are already located in a GCP bucket.
-        - All files are in csv format
+        - Files are already located in a GCP bucket in the same project:
+            - gs://bucket-name/human_resurces/hired_employees.csv
+            - gs://bucket-name/human_resurces/departments.csv
+            - gs://bucket-name/human_resurces/jobs.csv
+
+        - All files are comma separated
+
     """
     
     client = bigquery.Client()
@@ -16,6 +21,7 @@ def csv_to_bq(data_source, table_schema, project_id='fake-project-id', dataset_n
 
     job_config = bigquery.LoadJobConfig(
 
+        #schema to be passed when calling the function in the main script
         schema = table_schema,
         #Assuming the files contain headers
         skip_leading_rows=1,

@@ -5,20 +5,20 @@ from google.cloud import bigquery
 if __name__=='__main__':
     
     hired_employees_schema = [
-            bigquery.SchemaField("id", "INT64", mode = "REQUIRED"),
+            bigquery.SchemaField("id", "INTEGER", mode = "REQUIRED"),
             bigquery.SchemaField("name", "STRING"),
             bigquery.SchemaField("datetime", "STRING"),
-            bigquery.SchemaField("department_id", "INT64"),
-            bigquery.SchemaField("job_id", "INT64"),
+            bigquery.SchemaField("department_id", "INTEGER"),
+            bigquery.SchemaField("job_id", "INTEGER"),
             ]
 
     departments_schema =  [
-            bigquery.SchemaField("id", "INT64", mode = "REQUIRED"),
+            bigquery.SchemaField("id", "INTEGER", mode = "REQUIRED"),
             bigquery.SchemaField("department", "STRING"),
             ]
 
     jobs_schema = [
-            bigquery.SchemaField("id", "INT64", mode = "REQUIRED"),
+            bigquery.SchemaField("id", "INTEGER", mode = "REQUIRED"),
             bigquery.SchemaField("job", "STRING"),
             ]
 

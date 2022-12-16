@@ -7,59 +7,95 @@ app = Flask(__name__)
 # Set bigquery client
 client = bigquery.Client()
 
-# table names:
-table_1_name = "proyect-id.dataset.table-1-name"
-table_2_name = "proyect-id.dataset.table-2-name"
+"""
+Assumptions:
+    - proyect is set to default
+    - dataset name: human_resources
+    - tables names:
+        - employees table name: hired_employees
+        - departments table name: departments
+        - jobs table name: jobs
+"""
+# Set table references
 
-# Create a table reference.
-table_ref_1 = client.dataset('dataset').table('table-1-name')
-table_ref_2 = client.dataset('dataset').table('table-2-name')
+# hired employees
+hired_employees_table_ref = client.dataset('human_resources').table('hired_employees')
+# departments
+departments_table_ref = client.dataset('human_resources').table('departments')
+# jobs
+jobs_table_ref = client.dataset('human_resources').table('jobs')
 
-table_1 = bigquery.Table(table_ref_1)
-table_2 = bigquery.Table(table_ref_2)
+hired_employees_table = bigquery.Table(hired_employees_table_ref)
+departments_table = bigquery.Table(departments_table_ref)
+jobs_table = bigquery.Table(jobs_table_ref)
 
-
-table_1.schema = [
-    bigquery.SchemaField("id", "INTEGER"),
+# Tables schemas 
+hired_employees_table.schema = [
+    bigquery.SchemaField("id", "INTEGER", mode = "REQUIRED"),
     bigquery.SchemaField("name", "STRING"),
+    bigquery.SchemaField("datetime", "STRING"),
+    bigquery.SchemaField("department_id", "INTEGER"),
+    bigquery.SchemaField("job_id", "INTEGER"),
 ]
 
-table_2.schema = [
-    bigquery.SchemaField("id", "INTEGER"),
-    bigquery.SchemaField("first_name", "STRING"),
-    bigquery.SchemaField("last_name", "STRING"),
-
-
+departments_table.schema = [
+    bigquery.SchemaField("id", "INTEGER", mode = "REQUIRED"),
+    bigquery.SchemaField("department", "STRING"),
 ]
 
-# Define the endpoint for posting data to the table.
-@app.route("/post-data-1", methods=["POST"])
+jobs_table.schema = [
+    bigquery.SchemaField("id", "INTEGER", mode = "REQUIRED"),
+    bigquery.SchemaField("job", "STRING"),
+]
+
+# Define the endpoint for posting employees data
+@app.route("/post-employee-data", methods=["POST"])
 def post_data_1():
    
+    # Get the date on the request
     data = request.get_json()
 
-    
-    errors = client.insert_rows(table_1, data)
+    # Store errors if ocurred
+    errors = client.insert_rows(hired_employees_table, data)
 
     
     if errors == []:
-        return "Data was posted successfully to the table 1.", 200
+        return "Data was posted successfully to the hired employees table.", 200
     else:
-        return "Errors occurred while posting data to the table 1: " + str(errors), 400
+        return "Errors occurred while posting data to the hired employees table: " + str(errors), 400
 
-@app.route("/post-data-2", methods=["POST"])
+# Endpoint for departments posting
+@app.route("/post-department-data", methods=["POST"])
 def post_data_2():
     
+    # Get the date on the request
     data = request.get_json()
 
-    errors = client.insert_rows(table_2, data)
+    # Store errors if ocurred
+    errors = client.insert_rows(departments_table, data)
 
     if errors == []:
-        return "Data was posted successfully to the table 2.", 200
+        return "Data was posted successfully to the departments table.", 200
     else:
-        return "Errors occurred while posting data to the table 2: " + str(errors), 400
+        return "Errors occurred while posting data to the departments table: " + str(errors), 400
 
-# Run 
+# Endpoint for jobs posting
+@app.route("/post-job-data", methods=["POST"])
+def post_data_2():
+    
+    # Get the date on the request
+    data = request.get_json()
+
+    # Store errors if ocurred
+    errors = client.insert_rows(jobs_table, data)
+
+    if errors == []:
+        return "Data was posted successfully to the jobs table.", 200
+    else:
+        return "Errors occurred while posting data to the jobs table: " + str(errors), 400
+
+
+# Run on port 8080 (flask default)
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8080)
+    app.run(host="127.0.0.1", port=8080)
 

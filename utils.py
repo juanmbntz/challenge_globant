@@ -1,4 +1,7 @@
 from google.cloud import bigquery
+import requests
+import json
+
 
 def csv_to_bq(data_source, table_schema, project_id='fake-project-id', dataset_name='human_resources',  bucket_name='gs://bucket-name'):
 
@@ -38,5 +41,19 @@ def csv_to_bq(data_source, table_schema, project_id='fake-project-id', dataset_n
 
     load_job.result()
 
+
+def post_to_api(endpoint: str, data: str):
+
+    host_endpoint = 'http://localhost:8080/' + endpoint
+
+    headers = {'Content-Type': 'application/json'}
+
+    if 1 <= len(data) <= 1000:
+        response = requests.post(host_endpoint, headers=headers, data=data)
+
+        print(response.status_code)
+    
+    else:
+        print("You're trying to insert too many records. The limit is set to 1000, please make a smaller request")
 
     

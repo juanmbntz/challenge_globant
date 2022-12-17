@@ -1,7 +1,20 @@
-import requests 
+import requests
+import json
+from utils import post_to_api
 
-base_url = "http://127.0.0.1:8080/"
+if __name__ == '__main__':
 
-response = requests.post(base_url + "post-data-1", {"id": 1,"name": "Juan Manuel"})
+    #Open json files with the data to be inserted
+    employees_file = open('new_employees.json')
+    departments_file = open('new_departments.json')
+    jobs_file = open('new_jobs.json')
 
-print(response.json())
+    #POST method requires list of jsons with doulbe quotes
+    employees_rows = json.dumps(json.load(employees_file))
+    departments_rows = json.dumps(json.load(departments_file))
+    jobs_rows = json.dumps(json.load(jobs_file))
+
+    #send POST requests to the API with the desired data
+    post_to_api('post-employee-data', employees_rows)
+    post_to_api('post-department-data', departments_rows)
+    post_to_api('post-job-data', jobs_rows)

@@ -9,7 +9,7 @@
 - api_main.py :
   - Run this script to initialize the Rest API that will process batch inserts in the desired bigquery table.
   - Just for testing purposes, the API is hosted in our cloud shell virtual machine. 
-    - To do: Modify the scripts to host the API using a compute engine virtual machine inside our VPC network.
+    - To do: Modify the scripts to host the API using a compute engine virtual machine inside our VPC network. Post requests are currently pointng to localhost.
 
 - insert_batch_data.py :
   - Run this file to make POST requests to the API. This job will read files from the "batch_data" folder and insert records in the bigquery tables.

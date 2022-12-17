@@ -70,8 +70,6 @@ def post_to_api(endpoint, data):
         print("You're trying to insert too many records. The limit is set to 1000, please make a smaller request")
 
 
-from google.cloud import bigquery 
-
 def backup_table(project, dataset, table_id, bucket_name, backup_date):
 
     """

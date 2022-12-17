@@ -5,9 +5,9 @@ from utils import post_to_api
 if __name__ == '__main__':
 
     #Open json files with the data to be inserted
-    employees_file = open('new_employees.json')
-    departments_file = open('new_departments.json')
-    jobs_file = open('new_jobs.json')
+    employees_file = open('./batch_data/new_employees.json')
+    departments_file = open('./batch_data/new_departments.json')
+    jobs_file = open('./batch_data/new_jobs.json')
 
     #POST method requires list of jsons with doulbe quotes
     employees_rows = json.dumps(json.load(employees_file))

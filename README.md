@@ -18,4 +18,8 @@
   - In the utils.py module, we have a python function that can be called to restored any bigquery table using the backup file of a specific day.
 
   
- 
+### Reporting folder:
+  - Inside this folder we have 2 SQL scripts to create the tables requested by the stakeholders.
+  - There are also 2 visual reports created using GCP Looker Studio. You can request viewer access using the following links:
+    - Hirings by quarter: https://datastudio.google.com/reporting/c18d2d2f-2862-4fcd-8f20-2d2541f08d3d
+    - Hirings by department: https://datastudio.google.com/reporting/ab37eb82-2dc1-432c-ab34-c450c252836a

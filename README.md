@@ -18,6 +18,9 @@
   - This file should be stored inside the cloud composer environment dags folder. The goal of this job is to store daily backups of all tables in AVRO format files that will be kept inside a gcs bucket.
   - In the utils.py module, we have a python function that can be called to restored any bigquery table using the backup file of a specific day.
 
+## Docker
+  - Dockerfile : to create a docker image with all required libraries, scripts and files to run our API in a VM or GKE.
+  - pus-docker-image.sh : Use this file to push the docker image to google cloud container registry.
   
 ### Reporting folder:
   - Inside this folder we have 2 SQL scripts to create the tables requested by the stakeholders.
